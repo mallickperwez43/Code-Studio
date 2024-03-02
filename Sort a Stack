@@ -1,0 +1,15 @@
+// using min heap
+
+#include <bits/stdc++.h> 
+void sortStack(stack<int> &stack)
+{
+	priority_queue<int,vector<int>,greater<int>> minh;
+	while(!stack.empty()){
+		minh.push(stack.top());
+		stack.pop();
+	}
+	while(!minh.empty()){
+		stack.push(minh.top());
+		minh.pop();
+	}
+}
