@@ -1,0 +1,56 @@
+#include <bits/stdc++.h> 
+
+void sub(vector<int>v, vector<int>Output,int i,vector<vector<int>> &Ans){
+
+ 
+
+    if(i>=v.size()){
+
+        Ans.push_back(Output);
+
+        return ;
+
+    }
+
+ 
+
+    //exclude
+
+    sub(v,Output,i+1,Ans);
+
+ 
+
+    //iNCLUDE
+
+ 
+
+    int elm=v[i];
+
+ 
+
+    Output.push_back(elm);
+
+ 
+ 
+    sub(v,Output,i+1,Ans);
+
+}
+
+ 
+
+
+vector<vector<int>> pwset(vector<int>v)
+{
+    //Write your code here
+     //Creating vector of vector where we store our ans
+
+    vector<vector<int> >Ans;
+
+    vector<int>Output;
+
+    int i=0;
+
+    sub(v,Output,i,Ans);
+
+    return Ans;
+}
