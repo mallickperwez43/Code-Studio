@@ -1,0 +1,49 @@
+int findMin(vector<int>& arr)
+{
+	// Write your code here.
+	 int n = arr.size();
+
+        int low  = 0; 
+
+        int high = n-1;
+
+        int minm = INT_MAX;
+
+        while(low<=high){
+
+            int mid = (low+high)/2;
+
+            // check which portion is sorted 
+
+            // out of the sorted one it may or may not be the min element
+
+            // if left is sorted
+
+            if(arr[low]<=arr[mid]){
+
+                minm = min (minm,arr[low]);
+
+                // eliminate the left portion
+
+                low = mid+1;
+
+            }
+
+            // if right is sorted
+
+            else{
+
+                // minimum will be sorted
+
+                minm = min(minm,arr[mid]);
+
+                // elimante right half
+
+                high = mid-1;
+
+            }
+
+        }
+
+        return minm;
+}
