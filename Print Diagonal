@@ -1,0 +1,46 @@
+void PrintDiagonals(int **arr, int row, int col){
+	/*Write your code here.
+	*Dont write main(). 
+	*Dont take input, it is passed as function argument.
+	*Print output as specified in question.
+	*/
+	for(int k=0;k<row;k++){
+
+        int i=k;
+
+        int j=0;
+
+        while(i>=0 && j<col){
+
+            cout<<arr[i][j]<<" ";
+
+            i--;
+
+            j++;
+
+        }
+
+        cout<<endl;
+
+    }
+
+    for(int k=1;k<col;k++){
+
+        int i=row-1;
+
+        int j=k;
+
+        while(i>=0 && j<col){
+
+            cout<<arr[i][j]<<" ";
+
+            i--;
+
+            j++;
+
+        }
+
+        cout<<endl;
+
+    }
+}
