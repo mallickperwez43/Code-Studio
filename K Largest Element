@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+// Function to find the K largest elements in the array
+vector<int> Klargest(vector<int> &a, int k, int n) {
+    // Sort the array in non-decreasing order
+    sort(a.begin(), a.end());
+
+    // Create a vector to store the K largest elements
+    vector<int> ans;
+
+    // Traverse the sorted array from index (n - k) to n - 1 to get the K largest elements
+    for(int i = n - k; i < n; i++){
+        ans.push_back(a[i]); // Add each element to the result vector
+    }
+    return ans; // Return the vector containing the K largest elements
+}
