@@ -1,0 +1,55 @@
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+            int data;
+            Node *next;
+            Node()
+            {
+                this->data = 0;
+                next = NULL;
+            }
+            Node(int data)
+            {
+                this->data = data;
+                this->next = NULL;
+            }
+            Node(int data, Node* next)
+            {
+                this->data = data;
+                this->next = next;
+            }
+        };
+
+*****************************************************************/
+
+// Function to detect a cycle in a linked list
+// Parameters:
+// - head: Pointer to the head of the linked list
+// Returns:
+// - true if there is a cycle in the linked list, false otherwise
+bool detectCycle(Node *head)
+{
+    // Initialize two pointers, slow and fast, both starting from the head
+    Node *slow = head;
+    Node *fast = head;
+
+    // Traverse the linked list using the slow and fast pointers
+    while (fast != nullptr && fast->next != nullptr)
+    {
+        // Move slow pointer by one step
+        slow = slow->next;
+        // Move fast pointer by two steps
+        fast = fast->next->next;
+        
+        // If slow and fast pointers meet, there is a cycle
+        if (fast == slow) 
+            return true;
+    }
+    
+    // If the loop exits, it means there is no cycle in the linked list
+    return false;
+}
