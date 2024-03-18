@@ -1,0 +1,107 @@
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+            int data;
+            Node *next;
+            Node()
+            {
+                this->data = 0;
+                next = NULL;
+            }
+            Node(int data)
+            {
+                this->data = data;
+                this->next = NULL;
+            }
+            Node(int data, Node* next)
+            {
+                this->data = data;
+                this->next = next;
+            }
+        };
+
+
+*****************************************************************/
+class Stack
+{
+    // Declare a private member variable to store the top node of the stack
+    Node* top;
+    // Declare a private member variable to store the size of the stack
+    int size;
+
+public:
+    // Constructor for the Stack class
+    Stack()
+    {
+        // Initialize the top pointer to NULL, indicating an empty stack
+        top = NULL;
+        // Initialize the size of the stack to 0
+        size = 0;
+    }
+
+    // Function to get the size of the stack
+    int getSize()
+    {
+        // Return the size of the stack
+        return size;
+    }
+
+    // Function to check if the stack is empty
+    bool isEmpty()
+    {
+        // Check if the size of the stack is 0
+        return size == 0;
+    }
+
+    // Function to push an element onto the stack
+    void push(int data)
+    {
+        // Create a new node with the given data
+        Node* newNode = new Node(data);
+        // If the stack is empty, set the new node as the top and increment the size
+        if(top == NULL){
+            top = newNode;
+            size++;
+        }
+        // If the stack is not empty, set the new node's next pointer to the current top,
+        // then update the top to the new node, and increment the size
+        else{
+            newNode -> next = top;
+            top = newNode;
+            size++;
+        }
+    }
+
+    // Function to pop an element from the stack
+    void pop()
+    {
+        // Check if the stack is empty
+        if(top == NULL){
+            return; // If the stack is empty, return without doing anything
+        }
+        // Store the current top node in a temporary variable
+        Node* temp = top;
+        // Update the top pointer to point to the next node
+        top = temp -> next;
+        // Delete the temporary variable to free up memory
+        delete temp;
+        // Decrement the size of the stack
+        size--;
+    }
+
+    // Function to get the element at the top of the stack
+    int getTop()
+    {
+        // Check if the stack is not empty
+        if(top != NULL){
+            // Return the data stored in the top node
+            return top -> data;
+        }
+        // If the stack is empty, return -1 (or any other appropriate value)
+        return -1;
+    }
+};
