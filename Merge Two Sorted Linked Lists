@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+
+/************************************************************
+
+    Following is the linked list node structure.
+    
+    template <typename T>
+    class Node {
+        public:
+        T data;
+        Node* next;
+
+        Node(T data) {
+            next = NULL;
+            this->data = data;
+        }
+
+        ~Node() {
+            if (next != NULL) {
+                delete next;
+            }
+        }
+    };
+
+************************************************************/
+// Function to merge and sort two linked lists in ascending order.
+// Parameters:
+// - first: Pointer to the head of the first linked list.
+// - second: Pointer to the head of the second linked list.
+// Returns:
+// - Pointer to the head of the merged and sorted linked list.
+Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
+{
+    // Create a new node to serve as the dummy head of the merged list.
+    Node<int>* head = new Node<int>(-1);
+    // Pointer to keep track of the current position in the merged list.
+    Node<int>* temp = head;
+
+    // Traverse both lists until either of them becomes NULL.
+    while (first != NULL and second != NULL) {
+        // Compare the data of the current nodes of both lists.
+        if (first->data < second->data) {
+            // If the data in the first list is smaller, attach it to the merged list.
+            temp->next = first;
+            // Move to the next node in the first list.
+            first = first->next;
+        }
+        else {
+            // If the data in the second list is smaller or equal, attach it to the merged list.
+            temp->next = second;
+            // Move to the next node in the second list.
+            second = second->next;
+        }
+        // Move the temp pointer to the newly attached node.
+        temp = temp->next;
+    }
+
+    // At this point, one of the lists may still have remaining elements.
+    // Attach the remaining elements of the first list, if any.
+    if (first)
+        temp->next = first;
+    // Attach the remaining elements of the second list, if any.
+    if (second)
+        temp->next = second;
+
+    // Return the merged and sorted list, skipping the dummy head.
+    return head->next;
+}
