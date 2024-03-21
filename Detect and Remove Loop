@@ -1,0 +1,60 @@
+/*************************************************
+    
+    class Node {
+        public :
+
+        int data;
+        Node *next;
+
+        Node(int data) {
+            this -> data = data;
+            this -> next = NULL;
+        }
+    };
+
+*************************************************/
+
+Node *removeLoop(Node *head)
+{
+    // Write your code here.
+
+    // If the list is empty or has only one node, there can be no loop.
+    if(head == NULL or head -> next == NULL)
+        return head;
+
+    // Cycle detection
+    Node* fast = head; // moves two steps at a time
+    Node* slow = head; // moves one step at a time
+    bool cycleExist = false;
+
+    // Detecting if there is a cycle in the linked list
+    while(slow !=NULL and fast != NULL){
+        slow = slow -> next; // Move slow pointer one step
+        fast = fast -> next; // Move fast pointer one step
+        if(fast != NULL)
+            fast = fast -> next; // Move fast pointer another step
+
+        if(slow == fast){ // If slow and fast pointers meet, it indicates a cycle
+            cycleExist = true; // Set the flag indicating a cycle exists
+            break;
+        }
+    }
+    
+    // Finding the starting point of the cycle if it exists
+    if(cycleExist){
+        slow = head; // Move slow pointer back to the head
+        while(slow != fast){ // Move both pointers until they meet again
+            slow = slow -> next;
+            fast = fast -> next;
+        }
+    }
+    
+    // Removing the cycle
+    while(slow -> next != fast){ // Move slow pointer until it is just before the start of the cycle
+        slow = slow -> next;
+    }
+
+    slow -> next = NULL; // Break the cycle by setting the next of the last node in the cycle to NULL
+
+    return head; // Return the head of the modified linked list
+}
