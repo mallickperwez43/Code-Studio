@@ -66,3 +66,63 @@ Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
     // Return the merged and sorted list, skipping the dummy head.
     return head->next;
 }
+
+// optimised 
+
+
+Node<int>* solve(Node<int>* first, Node<int>* second){
+    // if only one element is present in first list
+    // point its next to entire second list
+    if(first -> next == NULL){
+        first -> next = second;
+        return first;
+    }
+
+    Node<int>* cur1 = first;
+    Node<int>* next1 = cur1 -> next;
+    Node<int>* cur2 = second;
+    Node<int>* next2 = cur2 -> next;
+
+    while(next1 != NULL and cur2 != NULL){
+        if((cur2 -> data >= cur1 -> data) and (cur2 -> data <= next1 -> data)){
+            // node addtion in between first list
+            cur1 -> next = cur2;
+            next2 = cur2 -> next;
+            cur2 -> next = next1;
+
+            // update pointers
+            cur1 = cur2;  // first list
+            cur2 = next2;  // second list
+        }
+        else{
+            // go one step aheqad in first listk
+            cur1 = next1;
+            next1 = next1 -> next;
+            
+            // first list exhausted 
+            if(next1 == NULL){
+                cur1 -> next = cur2;
+                return first;
+            }
+        }
+    }
+    return first;
+}
+
+Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
+{
+    // Write your code here.
+    if(first == NULL)
+        return second;
+    if(second == NULL)
+        return first;
+    
+    // deciding which list to be first
+    if(first -> data <= second -> data){
+        return solve(first, second);
+    }
+    else{
+        return solve(second, first);
+    }
+}
+
