@@ -1,0 +1,93 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the linked list node structure:
+    
+    template <typename T>
+    class Node {
+        public:
+        T data;
+        Node* next;
+
+        Node(T data) {
+            next = NULL;
+            this->data = data;
+        }
+    };
+
+************************************************************/
+Node<int> * reverseLL(Node<int> * head){
+    Node<int>* ahead = NULL;
+    Node<int>* cur = head;
+    Node<int>* prev = NULL;
+
+    while(cur != NULL){
+        ahead = cur -> next;
+        cur -> next = prev;
+        prev = cur;
+        cur = ahead;
+    }
+    return prev;
+}
+void insertAtTail(Node<int>* &head, Node<int>* &tail, int val){
+    Node<int>* temp = new Node<int>(val);
+
+    if(head == NULL){
+        head = temp;
+        tail = temp;
+    }
+    else{
+        tail -> next = temp;
+        tail = temp;
+    }
+}
+
+Node<int>* add(Node<int>* first, Node<int>* second){
+    int carry = 0;
+
+    Node<int>* ansHead = NULL;
+    Node<int>* ansTail = NULL;
+
+    while(first != NULL or second != NULL or carry != 0){
+        int val1 = 0;
+        if(first != NULL)
+            val1 = first -> data;
+        
+        int val2 = 0;
+        if(second != NULL)
+            val2 = second -> data;
+
+        int sum = carry + val1 + val2;
+
+        int digit = sum % 10;
+
+        insertAtTail(ansHead, ansTail, digit);
+
+        carry = sum / 10;
+
+        if(first !=NULL)
+           first = first -> next;
+        if(second != NULL)
+           second = second -> next;
+    }
+    return ansHead;
+}
+
+Node<int>* addTwoLists(Node<int>* first, Node<int>* second) {
+    // Write your code here.
+    
+    // step 1 - reverse both the list
+    first = reverseLL(first);
+    second = reverseLL(second);
+
+    // step 2 - add two LL
+    Node<int>* ans = add(first, second);
+
+    // step 3 - reverse the answer LL
+    ans = reverseLL(ans);
+
+    return ans;
+}
+
+TC : O(N + M)
+SC : O(max(N + M))
