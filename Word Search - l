@@ -1,0 +1,36 @@
+bool isPossible(int row, int col, int wordIdx, vector<vector<char>> &board, string &word){
+    if(wordIdx == word.length())
+        return true;
+    
+    if(row < 0 or row >= board.size() or col < 0 or col >= board[0].size() or board[row][col] != word[wordIdx])
+        return false;
+    
+    char curCh = board[row][col];
+    board[row][col] = '~';
+
+    int dirn[4][2] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+    
+    for(auto dir : dirn){
+        int newRow = row + dir[0];
+        int newCol = col + dir[1];
+        if(isPossible(newRow, newCol, wordIdx + 1, board, word))
+            return true;
+    }
+
+    board[row][col] = curCh;
+    return false;
+
+}
+
+bool present(vector<vector<char>> &board, string &word, int n, int m) 
+{
+    // Write your code here.
+    for(int row = 0; row < n; row++){
+        for(int col = 0; col < m; col++){
+            if(isPossible(row, col, 0, board, word)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
