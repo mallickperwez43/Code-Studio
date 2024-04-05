@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+
+string rearrangeString(string &s) {
+    int n = s.size(); // Get the size of the input string 's'
+    string ans = ""; // Initialize a string to store the rearranged string
+    unordered_map<char, int> mp; // Initialize an unordered map to store the frequency of characters in 's'
+
+    // Count the frequency of each character in the input string 's'
+    for(auto x: s) 
+        mp[x]++;
+
+    priority_queue<pair<int, char>> pq; // Initialize a priority queue to store pairs of character frequency and character
+
+    // Push pairs of character frequency and character into the priority queue
+    for(auto x: mp) {
+        pq.push({x.second, x.first});
+    }
+
+    pair<int, char> block = {-1, '$'}; // Initialize a pair to keep track of the previous character frequency and character
+    while(pq.size()) {
+        auto temp = pq.top(); pq.pop(); // Get the top element from the priority queue
+        ans += temp.second; // Append the character to the answer string
+        temp.first--; // Decrement the frequency of the character
+        
+        // If there is a character leftover from the previous iteration, push it back into the priority queue
+        if(block.first > 0) {
+            pq.push(block);
+        }
+        block = temp; // Update 'block' with the current character frequency and character
+    }
+
+    // Check if the length of the rearranged string is equal to the length of the original string
+    // If so, return the rearranged string; otherwise, return "NO SOLUTION"
+    return ans.size() == n ? ans : "NO SOLUTION";
+}
+
+
+TC : O(n + m log m)
+SC : O(n + m)
