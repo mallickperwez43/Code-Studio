@@ -1,0 +1,106 @@
+/************************************************************
+
+    Following is the Binary Tree node structure:
+
+    template <typename T>
+    class TreeNode
+    {
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data)
+        {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode()
+        {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+
+// Function to traverse the left boundary of a binary tree
+void traverseLeft(TreeNode<int> *root, vector<int> &ans){
+    // base case: root is null or leaf node
+    if(root == NULL or (root -> left == NULL and root -> right == NULL))
+        return;
+
+    // Push current node's data to the answer vector
+    ans.push_back(root -> data);
+
+    // Traverse left subtree if exists, otherwise traverse right subtree
+    if(root -> left)
+        traverseLeft(root -> left, ans);
+    else
+        traverseLeft(root -> right, ans);
+}
+
+// Function to traverse the leaf nodes of a binary tree
+void traverseLeaf(TreeNode<int> *root, vector<int> &ans){
+
+    // base case: root is null
+    if(root == NULL)
+        return;
+    
+    // If current node is a leaf node, push its data to the answer vector
+    if(root -> left == NULL and root -> right){
+        ans.push_back(root -> data);
+        return;
+    }
+
+    // Recursively traverse left and right subtrees
+    traverseLeaf(root -> left, ans);
+    traverseLeaf(root -> right, ans);
+}
+
+// Function to traverse the right boundary of a binary tree
+void traverseRight(TreeNode<int> *root, vector<int> &ans){
+    // base case: root is null or leaf node
+    if(root == NULL or (root -> left == NULL and root -> right == NULL))
+        return;
+
+    // Traverse right subtree if exists, otherwise traverse left subtree
+    if(root -> right)
+        traverseRight(root -> right, ans);
+    else 
+        traverseRight(root -> left, ans);
+
+    // Push current node's data to the answer vector
+    ans.push_back(root -> data);
+}
+
+// Function to traverse the boundary of a binary tree
+vector<int> traverseBoundary(TreeNode<int> *root)
+{
+    // Initialize the answer vector
+    vector<int> ans;
+
+    // base case: root is null
+    if(root == NULL)
+        return ans;
+
+    // Push root's data to the answer vector
+    ans.push_back(root -> data);
+
+    // Traverse left boundary
+    traverseLeft(root -> left, ans);
+
+    // Traverse leaf nodes
+    traverseLeaf(root -> left, ans);
+    traverseLeaf(root -> right, ans);
+
+    // Traverse right boundary in reverse order
+    traverseRight(root -> right, ans);
+
+    // Return the answer vector
+    return ans;
+}
