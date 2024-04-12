@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+BinaryTreeNode<int> *solve(vector<int> &pre, vector<int> &isLeaf, int &index, int size){
+    // base case
+    if(index == size)
+        return NULL;
+    
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(pre[index]);
+
+    if(isLeaf[index] == 0){
+        index++;
+        root -> left = solve(pre, isLeaf, index, size);
+        index++;
+        root -> right = solve(pre, isLeaf, index, size); 
+    }
+    return root;
+}
+
+
+BinaryTreeNode<int> *constructTree(vector<int> &pre, vector<int> &isLeaf) {
+    int index = 0;
+    int size = pre.size();
+    BinaryTreeNode<int> *root = solve(pre, isLeaf, index, size);
+    return root;
+}
