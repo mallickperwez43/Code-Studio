@@ -1,0 +1,66 @@
+// using morris traversal
+
+#include <bits/stdc++.h> 
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+
+int kthSmallest(BinaryTreeNode<int>* root, int k) {
+    // Write your code here.
+    BinaryTreeNode<int> *temp = root; 
+    int counter = 0;
+    if(temp == NULL){
+        return -1;
+    }
+
+    while(temp != NULL){
+       // if left child doesnt exist
+        if(temp -> left == NULL){
+            counter++;
+
+            if(counter == k){
+                return temp -> data;
+            }
+            temp = temp -> right;
+        }
+        else{
+            // find predecessor
+            BinaryTreeNode<int> *pre = temp -> left;
+            while(pre -> right and pre -> right != temp){
+                pre = pre -> right;
+            }
+
+            // temp link creation
+            if(pre -> right == NULL){
+                pre -> right = temp;
+                temp = temp -> left;
+            }
+            else{ // temp link removal
+                pre -> right = NULL;
+                counter++;
+
+                if(counter == k){
+                    return temp -> data;
+                }
+                temp = temp -> right;
+            }    
+        }
+    }
+    return -1;
+}
